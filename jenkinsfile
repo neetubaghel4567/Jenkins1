@@ -1,18 +1,12 @@
 pipeline {
-
-    agent any
+ agent any
    environment{
 
         CLOUDSDK_CORE_PROJECT = 'jenkins-server-project'
-
-    }
+ }
 
 stages{
-
-
-
-
-        stage('Checkout') {
+ stage('Checkout') {
 
             steps {
 
@@ -21,11 +15,7 @@ stages{
             }
 
         }
-
-
-
-
-        stage('gcp_authentication'){
+ stage('gcp_authentication'){
 
             steps{
 
@@ -54,14 +44,10 @@ stages{
                 // sh 'terraform plan -var app_name=${TF_VAR_app_name} -var env=${TF_VAR_env} -out=tfplan'
 
             }
-
-          
-
         }
 
-        stage('Approve') {
-
-      steps {
+    stage('Approve') {
+     steps {
 
         // Prompt the user to approve the changes
 
@@ -71,7 +57,7 @@ stages{
 
     }
 
-         stage('Terraform Apply') {
+    stage('Terraform Apply') {
 
       steps {
 
@@ -81,7 +67,6 @@ stages{
 
       }
 
-    }
    }
-
+   }
 }
