@@ -20,16 +20,28 @@ pipeline {
         }
         stage('Terraform Init') {
             steps {
-              sh 'terraform init'
+              script {
+              if (env.BRANCH_NAME.contains('dev')) {
+               dir('env/dev') {
+               sh "pwd"
+               sh 'terraform init'
+               }
+             }
             }
-        }
+          }
+         }
         stage('Terraform Plan') {
             steps {
-                sh 'terraform plan'
-                // sh 'terraform plan -var app_name=${TF_VAR_app_name} -var env=${TF_VAR_env} -out=tfplan'
+                 script {
+                if (env.BRANCH_NAME.contains('dev')) {
+               dir('env/dev') {
+               sh "pwd"
+               sh 'terraform plan -out=terraform.plan'
+               }
+             }
             }
-          
-        }
+            }
+          }
         stage('Approve') {
       steps {
         // Prompt the user to approve the changes
@@ -38,8 +50,16 @@ pipeline {
     }
          stage('Terraform Apply') {
       steps {
-        sh 'terraform apply -auto-approve'
-        // sh 'terraform apply -auto-approve tfplan'
+        script {
+          if (env.BRANCH_NAME.contains('dev')) {
+           dir('env/dev') {
+             sh "pwd"
+
+              }
+
+            }
+
+          }
       }
     }
 
