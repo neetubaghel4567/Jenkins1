@@ -42,13 +42,7 @@ pipeline {
         // sh 'terraform apply -auto-approve tfplan'
       }
     }
-triggers {
-        pollSCM('*/5 * * * *')
-        branches {
-            branch('dev-feature/*')
-            branch('main')
-        }
-        }
+
 
     }
 }
