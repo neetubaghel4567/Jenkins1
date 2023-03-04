@@ -1,68 +1,87 @@
 pipeline {
-    agent any
 
-    environment{
+    agent any
+   environment{
+
         CLOUDSDK_CORE_PROJECT = 'jenkins-server-project'
+
     }
 
-    stages{
+stages{
+
+
+
 
         stage('Checkout') {
+
             steps {
+
                 git branch: 'main', url: 'https://github.com/neetubaghel4567/Jenkins1'
+
             }
+
         }
+
+
+
 
         stage('gcp_authentication'){
+
             steps{
+
                 sh 'gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS'
+
             }
+
         }
+
         stage('Terraform Init') {
+
             steps {
-              script {
-              if (env.BRANCH_NAME.contains('dev')) {
-               dir('env/dev') {
-               sh "pwd"
-               sh 'terraform init'
-               }
-             }
+
+              sh 'terraform init'
+
             }
-          }
-         }
+
+        }
+
         stage('Terraform Plan') {
+
             steps {
-                 script {
-                if (env.BRANCH_NAME.contains('dev')) {
-               dir('env/dev') {
-               sh "pwd"
-               sh 'terraform plan -out=terraform.plan'
-               }
-             }
+
+                sh 'terraform plan'
+
+                // sh 'terraform plan -var app_name=${TF_VAR_app_name} -var env=${TF_VAR_env} -out=tfplan'
+
             }
-            }
-          }
+
+          
+
+        }
+
         stage('Approve') {
+
       steps {
+
         // Prompt the user to approve the changes
+
         input message: 'Are you sure you want to apply these changes?', ok: 'Approve'
+
       }
+
     }
+
          stage('Terraform Apply') {
+
       steps {
-        script {
-          if (env.BRANCH_NAME.contains('dev')) {
-           dir('env/dev') {
-             sh "pwd"
 
-              }
+        sh 'terraform apply -auto-approve'
 
-            }
+        // sh 'terraform apply -auto-approve tfplan'
 
-          }
       }
-    }
-
 
     }
+   }
+
 }
