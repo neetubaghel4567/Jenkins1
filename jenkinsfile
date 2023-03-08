@@ -2,7 +2,7 @@ pipeline {
  agent any
    environment{
 
-        CLOUDSDK_CORE_PROJECT = 'jenkins-server-project'
+        CLOUDSDK_CORE_PROJECT = 'magnetic-quasar-378605'
  }
 
 stages{
