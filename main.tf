@@ -2,7 +2,7 @@ resource "google_compute_instance" "default" {
   name         = "nehatestvm1"
   machine_type = "e2-medium"
   zone         = "us-central1-a"
- project ="jenkins-server-project"
+ project ="	magnetic-quasar-378605"
   
  boot_disk {
     initialize_params {
