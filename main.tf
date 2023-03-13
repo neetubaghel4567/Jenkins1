@@ -1,5 +1,5 @@
 resource "google_compute_instance" "default" {
-  name         = "nehatestvm11"
+  name         = "neetu"
   machine_type = "e2-medium"
   zone         = "us-central1-a"
  project ="magnetic-quasar-378605"
