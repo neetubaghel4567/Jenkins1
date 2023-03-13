@@ -1,38 +1,30 @@
 pipeline {
-
-    agent any
+agent any
    environment{
 
         CLOUDSDK_CORE_PROJECT = 'magnetic-quasar-378605'
+        }
+
+ stages{
+stage('Checkout') {
+   steps {
+   git branch: 'main', url: 'https://github.com/neetubaghel4567/Jenkins1'
 
     }
 
- stages{
-
- stage('Checkout') {
-
-            steps {
-
-                git branch: 'main', url: 'https://github.com/neetubaghel4567/Jenkins1'
-
-            }
-
         }
 
+ //stage('gcp_authentication'){
 
+   //         steps{
 
+     //           sh 'gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS'
 
-        stage('gcp_authentication'){
+       //     }
 
-            steps{
+        //}
 
-                sh 'gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS'
-
-            }
-
-        }
-
-        stage('Terraform Init') {
+  stage('Terraform Init') {
 
             steps {
 
@@ -42,7 +34,7 @@ pipeline {
 
         }
 
-        stage('Terraform Plan') {
+ stage('Terraform Plan') {
 
             steps {
 
@@ -67,13 +59,6 @@ pipeline {
       }
 
     }
-
-
-
-
-
-
-
-    }
+ }
 
 }
