@@ -11,7 +11,8 @@ stages{
   }
  stage('gcp_authentication'){
    Steps{
-  sh 'gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS   }
+  sh 'gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS'
+  }
  }
  stage('Terraform Init') {
   steps {
